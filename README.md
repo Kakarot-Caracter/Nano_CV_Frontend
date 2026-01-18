@@ -1,36 +1,74 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Nano CV - Frontend
 
-## Getting Started
+Este es el frontend oficial para el ecosistema **Nano CV**, una suite de herramientas de alto rendimiento para la creación de currículums. Esta aplicación web, construida con las tecnologías más modernas, proporciona una interfaz de usuario intuitiva y fluida para que los usuarios puedan crear, previsualizar y descargar sus CVs en formato PDF de manera sencilla.
 
-First, run the development server:
+## 🚀 Características Principales
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+*   **Interfaz Moderna:** Construida con [Next.js](https://nextjs.org/) y [React](https://react.dev/).
+*   **Estilizado con Tailwind CSS:** Interfaz limpia y responsiva gracias a [Tailwind CSS](https://tailwindcss.com/) y los componentes de [shadcn/ui](https://ui.shadcn.com/).
+*   **Gestión de Estado Eficiente:** Manejo de estado global con [Zustand](https://zustand-demo.pmnd.rs/) para una experiencia de usuario rápida y sin interrupciones.
+*   **Validación de Formularios:** Formularios robustos y validados en tiempo real con [React Hook Form](https://react-hook-form.com/) y [Zod](https://zod.dev/).
+*   **Experiencia de Usuario Optimizada:** Previsualización en tiempo real y una interfaz organizada en pestañas para cada sección del CV (Datos Personales, Experiencia, Educación, Habilidades, etc.).
+
+## ⚙️ Arquitectura del Ecosistema Nano CV
+
+El frontend es la puerta de entrada a un sistema de tres componentes diseñado para ser modular y de alto rendimiento:
+
+1.  **`nano_cv_frontend` (Este Repositorio):** La aplicación web con la que el usuario interactúa. Su responsabilidad es capturar los datos del currículum y enviarlos al backend en formato JSON.
+
+2.  **[Nano_CV_Backend](https://github.com/Kakarot-Caracter/Nano_CV_Backend):** Un orquestador de servicios construido en **NestJS**. Actúa como intermediario, recibiendo la petición JSON del frontend, transformando los datos al formato YAML y delegando la tarea de generación del PDF al motor principal.
+
+3.  **[Fast_Nano_CV_Engine_Memory](https://github.com/Kakarot-Caracter/Fast_Nano_CV_Engine_Memory):** El corazón del sistema. Un motor de generación de PDFs ultrarrápido escrito en **Rust** y compilado como un complemento nativo de Node.js. Opera completamente en memoria para un rendimiento máximo, tomando los datos en YAML y una plantilla para producir un archivo PDF sin tocar el sistema de archivos.
+
+### Flujo de Trabajo
+
+```
+Usuario en Frontend -> JSON -> Backend (NestJS) -> YAML -> Motor (Rust) -> PDF (Buffer) -> Descarga en Frontend
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🛠️ Instalación y Ejecución
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Para ejecutar este proyecto en un entorno de desarrollo, sigue estos pasos.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Requisitos Previos
 
-## Learn More
+*   [Node.js](https://nodejs.org/) (v18 o superior)
+*   `npm`, `yarn` o `pnpm`
+*   Una instancia del [Nano_CV_Backend](https://github.com/Kakarot-Caracter/Nano_CV_Backend) corriendo localmente (o accesible a través de una URL).
 
-To learn more about Next.js, take a look at the following resources:
+### Pasos de Instalación
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1.  **Clona el repositorio:**
+    ```bash
+    git clone https://github.com/Kakarot-Caracter/nano_cv_frontend.git
+    cd nano_cv_frontend
+    ```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+2.  **Instala las dependencias:**
+    ```bash
+    npm install
+    ```
 
-## Deploy on Vercel
+3.  **Configura la URL del Backend:**
+    (Si es necesario) Asegúrate de que las peticiones de la aplicación apunten a la URL correcta de tu backend. Esto puede requerir modificar las llamadas `fetch` o el cliente de API que uses.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+4.  **Ejecuta la aplicación en modo de desarrollo:**
+    ```bash
+    npm run dev
+    ```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+    Abre [http://localhost:3000](http://localhost:3000) en tu navegador para ver la aplicación.
+
+## 📜 Scripts Disponibles
+
+En el archivo `package.json` encontrarás los siguientes scripts:
+
+*   `npm run dev`: Inicia el servidor de desarrollo de Next.js.
+*   `npm run build`: Compila la aplicación para producción.
+*   `npm run start`: Inicia un servidor de producción de Next.js.
+*   `npm run lint`: Ejecuta el linter de Biome para revisar la calidad del código.
+*   `npm run format`: Formatea todo el código del proyecto usando Biome.
+
+## 📄 Licencia
+
+Este proyecto está bajo la Licencia MIT. Consulta el archivo `LICENSE` para más detalles.
